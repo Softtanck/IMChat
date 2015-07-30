@@ -14,7 +14,9 @@ import java.util.List;
 
 import android.view.View;
 
+import io.rong.imlib.NativeObject;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.TextMessage;
 
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ChatAdapter adapter;
     private List<Message> messages;
+    private Message message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.et);
 
         Log.d("Tanck", "start");
-        String Token = "ZHd3LAt9gCx7R9ej1iIx6kOBG78H+ewBb4Xr6KD9Ju0MHMiSx5VRWKCkzDu/NFp5shtJoySi1/o=";//test
+        String Token = "l+b9+ZKBjf5tlpOn2G2RE+5BZXJeeKSqHSs6ZG1t8pRjFz23cyW53obPJOcToEhzggUnJS+7aaNEzFxyP3z6cg==";//test
         /**
          * IMKit SDK调用第二步
          *
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String userId) {
                 Log.d("Tanck", "userId:" + userId);
-                messages = RongIMClient.getInstance().getHistoryMessages(ConversationType.PRIVATE, "1", -1, 20);
+                messages = RongIMClient.getInstance().getHistoryMessages(ConversationType.PRIVATE, "2", -1, 20);
                 if (null == messages) {
                     messages = new ArrayList<>();
                 }
@@ -75,30 +78,39 @@ public class MainActivity extends AppCompatActivity {
         RongIMClient.getInstance().setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
             @Override
             public boolean onReceived(Message message, int i) {
-                Log.d("Tanck", "接受到了消息:" + message.getObjectName());
+                Log.d("Tanck", "接受到了消息:" + ((TextMessage) message.getContent()).getContent());
                 messages.add(message);
-                adapter.notifyDataSetChanged();
-                return false;
+                updateMsg();
+                return true;
             }
         });
     }
 
     public void send(View view) {
-        listView.setSelection(messages.size() - 1);
         TextMessage textMessage = TextMessage.obtain(editText.getText().toString());
-        messages.add(Message.obtain("2", ConversationType.PRIVATE, textMessage));
-        RongIMClient.getInstance().sendMessage(ConversationType.PRIVATE, "1", textMessage, "push", null, new RongIMClient.SendMessageCallback() {
+
+        message = RongIMClient.getInstance().sendMessage(ConversationType.PRIVATE, "2", textMessage, null, null, new RongIMClient.SendMessageCallback() {
             @Override
             public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
-                Log.d("Tanck", "发送失败");
+                Log.d("Tanck", "发送失败:" + errorCode.getMessage());
+                message.setSentStatus(Message.SentStatus.FAILED);
+                updateMsg();
             }
 
             @Override
             public void onSuccess(Integer integer) {
-                Log.d("Tanck", "发送成功");
+                Log.d("Tanck", "发送成功:");
+                message.setSentStatus(Message.SentStatus.SENT);
+                updateMsg();
             }
         });
+        messages.add(message);
         editText.setText("");
+        updateMsg();
+    }
+
+    private void updateMsg() {
         adapter.notifyDataSetChanged();
+        listView.setSelection(messages.size() - 1);
     }
 }
