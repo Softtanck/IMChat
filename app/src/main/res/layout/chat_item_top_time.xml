@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:orientation="vertical">
+
+        <TextView
+            android:visibility="gone"
+            android:text="2015-7-30 15:56:02"
+            android:id="@+id/chat_tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/chat_top_time_style"
+            android:paddingBottom="3dip"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip"
+            android:paddingTop="3dip"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</FrameLayout>
