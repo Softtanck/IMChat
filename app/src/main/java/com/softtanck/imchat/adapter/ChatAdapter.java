@@ -1,4 +1,4 @@
-package com.softtanck.imchat;
+package com.softtanck.imchat.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.softtanck.imchat.R;
 import com.softtanck.imchat.utils.TimeFormatUtils;
 
 import java.util.List;

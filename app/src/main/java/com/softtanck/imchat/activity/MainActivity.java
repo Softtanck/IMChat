@@ -1,12 +1,18 @@
-package com.softtanck.imchat;
+package com.softtanck.imchat.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ListView;
+
+import com.softtanck.imchat.R;
+import com.softtanck.imchat.adapter.ChatAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.view.View;
 
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
@@ -18,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
 
+    private EditText editText;
+
     private ChatAdapter adapter;
     private List<Message> messages;
 
@@ -25,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        editText = (EditText) findViewById(R.id.et);
 
         Log.d("Tanck", "start");
         String Token = "ZHd3LAt9gCx7R9ej1iIx6kOBG78H+ewBb4Xr6KD9Ju0MHMiSx5VRWKCkzDu/NFp5shtJoySi1/o=";//test
@@ -50,18 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 adapter = new ChatAdapter(MainActivity.this, messages);
                 listView.setAdapter(adapter);
-//                RongIMClient.getInstance().sendMessage(ConversationType.PRIVATE, "1", io.rong.message.TextMessage.obtain("+"), "push", null, new RongIMClient.SendMessageCallback() {
-//                    @Override
-//                    public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
-//                        Log.d("Tanck", "发送失败");
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(Integer integer) {
-//                        Log.d("Tanck", "发送成功");
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                });
             }
 
             @Override
@@ -77,7 +75,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onReceived(Message message, int i) {
                 Log.d("Tanck", "接受到了消息:" + message.getObjectName());
+                adapter.notifyDataSetChanged();
                 return false;
+            }
+        });
+    }
+
+    public void send(View view) {
+        RongIMClient.getInstance().sendMessage(ConversationType.PRIVATE, "1", io.rong.message.TextMessage.obtain(editText.getText().toString()), "push", null, new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+                Log.d("Tanck", "发送失败");
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+                Log.d("Tanck", "发送成功");
             }
         });
     }
