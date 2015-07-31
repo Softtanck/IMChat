@@ -30,9 +30,11 @@
             android:clickable="true"
             android:focusable="true"
             android:gravity="left|center"
-            android:lineSpacingExtra="2dp"
+            android:maxHeight="225.0dip"
             android:maxWidth="225.0dip"
-            android:minHeight="30.0dip" />
+            android:minHeight="100.0dip"
+            android:minWidth="100.0dip"
+            android:scaleType="fitXY" />
 
         <ImageView
             android:id="@+id/chat_iv_state"

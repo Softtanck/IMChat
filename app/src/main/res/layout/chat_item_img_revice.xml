@@ -41,8 +41,10 @@
             android:focusable="true"
             android:gravity="center"
             android:maxHeight="225.0dip"
-            android:minHeight="30dip"
-            android:src="@drawable/psb" />
+            android:maxWidth="225.0dip"
+            android:minHeight="100.0dip"
+            android:minWidth="100.0dip"
+            android:scaleType="fitXY" />
     </RelativeLayout>
 
 </LinearLayout>
