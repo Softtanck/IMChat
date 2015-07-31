@@ -309,7 +309,6 @@ public class ChatAdapter extends BaseAdapter {
      * @param position
      */
     private void handleTextMessage(Message message, ViewHoder holder, int position) {
-        Log.d("Tanck", "当前位置:" + position + "--->" + ((TextMessage) message.getContent()).getContent() + "--->" + message.getMessageDirection() + "---->" + message.getSentStatus());
         holder.content.setText(((TextMessage) message.getContent()).getContent());
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {
             switch (message.getSentStatus()) {

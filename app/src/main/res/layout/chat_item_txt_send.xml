@@ -42,7 +42,7 @@
             android:layout_height="20dp"
             android:layout_alignTop="@id/chat_tv_content"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_toLeftOf="@id/chat_tv_content"
             android:src="@drawable/msg_state_failed_resend"
             android:visibility="gone" />
