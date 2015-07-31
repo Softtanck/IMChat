@@ -158,6 +158,16 @@ public class ChatAdapter extends BaseAdapter {
                     viewHoder.state = (ImageView) convertView.findViewById(R.id.chat_iv_state);
                 } catch (Exception e) {
                 }
+            } else if (message.getContent() instanceof ImageMessage) {
+                try {
+                    viewHoder.time = (TextView) convertView.findViewById(R.id.chat_tv_time);
+                    viewHoder.name = (TextView) convertView.findViewById(R.id.chat_tv_name);
+                    viewHoder.head = (ImageView) convertView.findViewById(R.id.chat_iv_head);
+                    viewHoder.imageView = (ImageView) convertView.findViewById(R.id.chat_iv_content);
+                    viewHoder.progressBar = (ProgressBar) convertView.findViewById(R.id.chat_pb);
+                    viewHoder.state = (ImageView) convertView.findViewById(R.id.chat_iv_state);
+                } catch (Exception e) {
+                }
             }
             convertView.setTag(viewHoder);
         } else {
@@ -265,11 +275,30 @@ public class ChatAdapter extends BaseAdapter {
      * 处理图片消息
      *
      * @param message
-     * @param viewHoder
+     * @param holder
      * @param position
      */
-    private void handleImageMessage(Message message, ViewHoder viewHoder, int position) {
-
+    private void handleImageMessage(Message message, ViewHoder holder, int position) {
+        holder.imageView.setImageResource(R.drawable.tmp_head_1); // 通过网络去获取图片
+        if (message.getMessageDirection() == Message.MessageDirection.SEND) {
+            switch (message.getSentStatus()) {
+                case DESTROYED://对方已销毁
+                case FAILED://发送失败
+                    holder.progressBar.setVisibility(View.GONE);
+                    holder.state.setVisibility(View.VISIBLE);
+                    break;
+                case SENDING://发送中
+                    holder.progressBar.setVisibility(View.VISIBLE);
+                    holder.state.setVisibility(View.GONE);
+                    break;
+                case READ:
+                case RECEIVED://对方已接受
+                case SENT://已发送
+                    holder.progressBar.setVisibility(View.GONE);
+                    holder.state.setVisibility(View.GONE);
+                    break;
+            }
+        }
     }
 
     /**
@@ -310,6 +339,7 @@ public class ChatAdapter extends BaseAdapter {
         ProgressBar progressBar;//进度
         ImageView state;//状态
         TextView time;//消息时间
+        ImageView imageView;//图片消息
     }
 
     /**
@@ -322,7 +352,7 @@ public class ChatAdapter extends BaseAdapter {
         if (content instanceof TextMessage) { // 文本消息
             return View.inflate(context, baseMessage.getMessageDirection() == Message.MessageDirection.RECEIVE ? R.layout.chat_item_txt_revice : R.layout.chat_item_txt_send, null);
         } else if (content instanceof ImageMessage) {  // 图片消息
-            return null;
+            return View.inflate(context, baseMessage.getMessageDirection() == Message.MessageDirection.RECEIVE ? R.layout.chat_item_img_revice : R.layout.chat_item_img_send, null);
         } else if (content instanceof LocationMessage) { // 位置消息
             return null;
         } else if (content instanceof VoiceMessage) { // 语音消息

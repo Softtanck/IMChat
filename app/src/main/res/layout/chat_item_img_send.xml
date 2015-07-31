@@ -18,8 +18,8 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/tmp_head_1" />
 
-        <TextView
-            android:id="@+id/chat_tv_content"
+        <ImageView
+            android:id="@+id/chat_iv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/chat_iv_head"
@@ -32,18 +32,16 @@
             android:gravity="left|center"
             android:lineSpacingExtra="2dp"
             android:maxWidth="225.0dip"
-            android:minHeight="30.0dip"
-            android:textColor="#ff000000"
-            android:textSize="@dimen/content_size_15sp" />
+            android:minHeight="30.0dip" />
 
         <ImageView
             android:id="@+id/chat_iv_state"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_alignTop="@id/chat_tv_content"
+            android:layout_alignTop="@id/chat_iv_content"
             android:layout_marginRight="5dp"
             android:layout_marginTop="20dp"
-            android:layout_toLeftOf="@id/chat_tv_content"
+            android:layout_toLeftOf="@id/chat_iv_content"
             android:src="@drawable/msg_state_failed_resend"
             android:visibility="gone" />
 
@@ -51,10 +49,10 @@
             android:id="@+id/chat_pb"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_alignTop="@id/chat_tv_content"
+            android:layout_alignTop="@id/chat_iv_content"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@id/chat_tv_content" />
+            android:layout_toLeftOf="@id/chat_iv_content" />
 
     </RelativeLayout>
 
