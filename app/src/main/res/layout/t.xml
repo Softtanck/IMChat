@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.softtanck.imchat.view.bubbleview.BubbleImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="150.0dip"
+        android:minWidth="100.0dip"
+        android:padding="10dp"
+        android:src="@drawable/tmp_head_1"
+        app:bubble_angle="10dp"
+        app:bubble_arrowHeight="20dp"
+        app:bubble_arrowLocation="right"
+        app:bubble_arrowOffset="0dp"
+        app:bubble_arrowTop="20dp"
+        app:bubble_arrowWidth="5dp" />
+</LinearLayout>

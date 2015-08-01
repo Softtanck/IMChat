@@ -39,7 +39,7 @@
             android:background="@drawable/bg_left_chat_message"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
+            android:gravity="left|center"
             android:lineSpacingExtra="2dp"
             android:maxWidth="225.0dip"
             android:minHeight="30dip"
