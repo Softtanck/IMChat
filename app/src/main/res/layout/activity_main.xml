@@ -13,8 +13,9 @@
         <EditText
             android:id="@+id/et"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="5" />
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:background="@drawable/input_default" />
 
         <Button
             android:layout_width="0dp"
