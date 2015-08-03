@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/chat_item_top_time" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_10dp_size">
+
+        <com.softtanck.imchat.view.imageview.CircleImageView
+            android:id="@+id/chat_iv_head"
+            android:layout_width="@dimen/default_head_50dp_size"
+            android:layout_height="@dimen/default_head_50dp_size"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/tmp_head_1" />
+
+        <TextView
+            android:id="@+id/chat_tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/chat_iv_head"
+            android:layout_marginRight="@dimen/default_5dp_size"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@id/chat_iv_head"
+            android:background="@drawable/bg_right_chat_message"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center|left"
+            android:lineSpacingExtra="2dp"
+            android:maxWidth="225.0dip"
+            android:textColor="#ff000000"
+            android:textSize="@dimen/content_size_15sp" />
+
+        <ImageView
+            android:id="@+id/chat_iv_state"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignTop="@id/chat_tv_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/chat_tv_content"
+            android:src="@drawable/msg_state_failed_resend"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/chat_pb"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignTop="@id/chat_tv_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/chat_tv_content" />
+
+    </RelativeLayout>
+
+</LinearLayout>

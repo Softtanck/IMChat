@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/chat_item_top_time" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+
+        <com.softtanck.imchat.view.imageview.CircleImageView
+            android:id="@+id/chat_iv_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/tmp_head_2" />
+
+        <TextView
+            android:id="@+id/chat_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/chat_iv_head"
+            android:text="我是名字"
+            android:textColor="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/chat_tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chat_tv_name"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/chat_iv_head"
+            android:background="@drawable/bg_left_chat_message"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="left|center"
+            android:lineSpacingExtra="2dp"
+            android:maxWidth="225.0dip"
+            android:textColor="#ff000000"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
