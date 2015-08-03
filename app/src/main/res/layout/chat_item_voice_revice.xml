@@ -29,8 +29,9 @@
             android:text="我是名字"
             android:textColor="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/chat_tv_content"
+
+        <LinearLayout
+            android:id="@+id/chat_ll_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/chat_tv_name"
@@ -38,13 +39,24 @@
             android:layout_toRightOf="@id/chat_iv_head"
             android:background="@drawable/bg_left_chat_message"
             android:clickable="true"
-            android:focusable="true"
-            android:gravity="left|center"
-            android:lineSpacingExtra="2dp"
-            android:maxWidth="225.0dip"
-            android:textColor="#ff000000"
-            android:textSize="15sp" />
+            android:focusable="true">
 
+            <ImageView
+                android:id="@+id/chat_iv_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                android:src="@drawable/chat_msg_voice_left" />
+
+            <TextView
+                android:id="@+id/chat_tv_voice_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:textColor="#ff000000"
+                android:textSize="15sp" />
+        </LinearLayout>
     </RelativeLayout>
-
 </LinearLayout>

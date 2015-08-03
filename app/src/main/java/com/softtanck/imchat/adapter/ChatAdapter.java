@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -183,6 +185,18 @@ public class ChatAdapter extends BaseAdapter {
                     viewHoder.state = (ImageView) convertView.findViewById(R.id.chat_iv_state);
                 } catch (Exception e) {
                 }
+            } else if (message.getContent() instanceof VoiceMessage) {
+                try {
+                    viewHoder.time = (TextView) convertView.findViewById(R.id.chat_tv_time);
+                    viewHoder.name = (TextView) convertView.findViewById(R.id.chat_tv_name);
+                    viewHoder.head = (ImageView) convertView.findViewById(R.id.chat_iv_head);
+                    viewHoder.voiceTime = (TextView) convertView.findViewById(R.id.chat_tv_voice_time);
+                    viewHoder.voiceIcon = (ImageView) convertView.findViewById(R.id.chat_iv_voice);
+                    viewHoder.voiceGroup = (LinearLayout) convertView.findViewById(R.id.chat_ll_content);
+                    viewHoder.progressBar = (ProgressBar) convertView.findViewById(R.id.chat_pb);
+                    viewHoder.state = (ImageView) convertView.findViewById(R.id.chat_iv_state);
+                } catch (Exception e) {
+                }
             }
             convertView.setTag(viewHoder);
         } else {
@@ -282,24 +296,31 @@ public class ChatAdapter extends BaseAdapter {
      * @param holder
      * @param position
      */
-    private void handleVoiceMessage(Message message, ViewHoder holder, int position) {
+    private void handleVoiceMessage(final Message message, final ViewHoder holder, int position) {
 
+        int voiceTime = ((VoiceMessage) message.getContent()).getDuration();
+        if (0 < voiceTime) {//有效声音
+            changeViewWidth(holder, voiceTime);
+        }
+
+        Log.d("Tanck", "收到语音地址:" + ((VoiceMessage) message.getContent()).getUri());
+        //文档中说downloadMedia带缓存任务,
         RongIMClient.getInstance().downloadMedia(Conversation.ConversationType.PRIVATE, tagId, RongIMClient.MediaType.AUDIO, String.valueOf(((VoiceMessage) message.getContent()).getUri()), new RongIMClient.DownloadMediaCallback() {
             @Override
             public void onProgress(int i) {
-
+                Log.d("Tanck", "正在下载:" + i);
             }
 
             @Override
             public void onSuccess(String s) {
-
+                Log.d("Tanck", "下载完成:" + s);
+                holder.voiceGroup.setOnClickListener(new VoicePlayClickListener(message, holder.voiceIcon, context));
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
             }
         });
-//        ((VoiceMessage) message.getContent()).getDuration()
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {
             switch (message.getSentStatus()) {
                 case DESTROYED://对方已销毁
@@ -319,6 +340,16 @@ public class ChatAdapter extends BaseAdapter {
                     break;
             }
         }
+    }
+
+    /**
+     * 改变语音视图宽度
+     *
+     * @param hoder
+     */
+    private void changeViewWidth(ViewHoder hoder, int voiceTime) {
+        hoder.voiceTime.setText(voiceTime + "\"");
+        hoder.voiceGroup.getLayoutParams().width = 50 * voiceTime;//这里的50是需要根据屏幕宽度去计算宽度因子
     }
 
     /**
@@ -415,6 +446,9 @@ public class ChatAdapter extends BaseAdapter {
         ImageView state;//状态
         TextView time;//消息时间
         ImageView imageView;//图片消息
+        TextView voiceTime;//语音时间
+        ImageView voiceIcon;//语音图片
+        LinearLayout voiceGroup;//包裹语音
     }
 
     /**
