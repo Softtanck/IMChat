@@ -23,4 +23,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile files('libs/Rong_IMLib_v2_2_5.jar')
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
 }

@@ -1,7 +1,7 @@
 package com.softtanck.imchat.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +10,26 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.softtanck.imchat.App;
+import com.softtanck.imchat.ImageLoaderConfig;
 import com.softtanck.imchat.R;
 import com.softtanck.imchat.utils.TimeFormatUtils;
 
 import java.util.List;
 
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.ImageMessage;
 import io.rong.message.InformationNotificationMessage;
 import io.rong.message.LocationMessage;
 import io.rong.message.RichContentMessage;
-import io.rong.message.VoiceMessage;
 import io.rong.message.TextMessage;
+import io.rong.message.VoiceMessage;
 
 /**
  * @author : Tanck
@@ -84,19 +91,27 @@ public class ChatAdapter extends BaseAdapter {
      */
     private static final int MESSAGE_TYPE_RECV_NTF_MSG = 12;
 
+    private ImageLoader imageLoader;
 
     private Context context;
 
     private List<Message> messages;
+
+    /**
+     * 标记聊天ID
+     */
+    private String tagId;
     /**
      * 默认间隔时间
      */
     private long DEAULT_TIME = 180 * 1000;
 
 
-    public ChatAdapter(Context context, List<Message> messages) {
+    public ChatAdapter(Context context, List<Message> messages, String tagId) {
         this.context = context;
         this.messages = messages;
+        this.imageLoader = App.getInstance().imageLoader;
+        this.tagId = tagId;
     }
 
     @Override
@@ -232,20 +247,20 @@ public class ChatAdapter extends BaseAdapter {
      * 处理位置消息
      *
      * @param message
-     * @param viewHoder
+     * @param holder
      * @param position
      */
-    private void handleLocationMessage(Message message, ViewHoder viewHoder, int position) {
+    private void handleLocationMessage(Message message, ViewHoder holder, int position) {
     }
 
     /**
      * 处理灰色小消息
      *
      * @param message
-     * @param viewHoder
+     * @param holder
      * @param position
      */
-    private void handleNotifiMessage(Message message, ViewHoder viewHoder, int position) {
+    private void handleNotifiMessage(Message message, ViewHoder holder, int position) {
 
     }
 
@@ -253,10 +268,10 @@ public class ChatAdapter extends BaseAdapter {
      * 处理图文消息
      *
      * @param message
-     * @param viewHoder
+     * @param holder
      * @param position
      */
-    private void handleRichContentMessage(Message message, ViewHoder viewHoder, int position) {
+    private void handleRichContentMessage(Message message, ViewHoder holder, int position) {
 
     }
 
@@ -264,11 +279,46 @@ public class ChatAdapter extends BaseAdapter {
      * 处理语音消息
      *
      * @param message
-     * @param viewHoder
+     * @param holder
      * @param position
      */
-    private void handleVoiceMessage(Message message, ViewHoder viewHoder, int position) {
+    private void handleVoiceMessage(Message message, ViewHoder holder, int position) {
 
+        RongIMClient.getInstance().downloadMedia(Conversation.ConversationType.PRIVATE, tagId, RongIMClient.MediaType.AUDIO, String.valueOf(((VoiceMessage) message.getContent()).getUri()), new RongIMClient.DownloadMediaCallback() {
+            @Override
+            public void onProgress(int i) {
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+            }
+        });
+//        ((VoiceMessage) message.getContent()).getDuration()
+        if (message.getMessageDirection() == Message.MessageDirection.SEND) {
+            switch (message.getSentStatus()) {
+                case DESTROYED://对方已销毁
+                case FAILED://发送失败
+                    holder.progressBar.setVisibility(View.GONE);
+                    holder.state.setVisibility(View.VISIBLE);
+                    break;
+                case SENDING://发送中
+                    holder.progressBar.setVisibility(View.VISIBLE);
+                    holder.state.setVisibility(View.GONE);
+                    break;
+                case READ:
+                case RECEIVED://对方已接受
+                case SENT://已发送
+                    holder.progressBar.setVisibility(View.GONE);
+                    holder.state.setVisibility(View.GONE);
+                    break;
+            }
+        }
     }
 
     /**
@@ -279,7 +329,33 @@ public class ChatAdapter extends BaseAdapter {
      * @param position
      */
     private void handleImageMessage(Message message, ViewHoder holder, int position) {
-        holder.imageView.setImageResource(R.drawable.tmp_head_1); // 通过网络去获取图片
+        Log.d("Tanck", "收到图片消息:" + ((ImageMessage) message.getContent()).getThumUri());
+        holder.imageView.setTag(((ImageMessage) message.getContent()).getThumUri());
+        imageLoader.displayImage(String.valueOf(((ImageMessage) message.getContent()).getThumUri()), holder.imageView, App.getInstance().imageLoaderConfig.setImageLoaderByNormal(), new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                if (imageUri.equals(view.getTag())) {
+                    view.setTag(null);//置空Tag
+                    ((ImageView) view).setImageBitmap(loadedImage);
+                }
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+
+            }
+        });
+//        holder.imageView.setImageResource(R.drawable.tmp_head_1); // 通过网络去获取图片
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {
             switch (message.getSentStatus()) {
                 case DESTROYED://对方已销毁
@@ -355,7 +431,7 @@ public class ChatAdapter extends BaseAdapter {
         } else if (content instanceof LocationMessage) { // 位置消息
             return null;
         } else if (content instanceof VoiceMessage) { // 语音消息
-            return null;
+            return View.inflate(context, baseMessage.getMessageDirection() == Message.MessageDirection.RECEIVE ? R.layout.chat_item_voice_revice : R.layout.chat_item_voice_send, null);
         } else if (content instanceof InformationNotificationMessage) { //小灰色提醒消息
             return null;
         } else {

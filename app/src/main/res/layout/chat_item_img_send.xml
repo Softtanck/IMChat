@@ -32,8 +32,6 @@
             android:gravity="left|center"
             android:maxHeight="225.0dip"
             android:maxWidth="225.0dip"
-            android:minHeight="100.0dip"
-            android:minWidth="100.0dip"
             android:scaleType="fitXY" />
 
         <ImageView
