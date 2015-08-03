@@ -4,25 +4,9 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
+    <include
         android:id="@+id/ll_input"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <EditText
-            android:id="@+id/et"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:background="@drawable/input_default" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="send" />
-    </LinearLayout>
+        layout="@layout/chat_input" />
 
     <ListView
         android:id="@+id/lv"
