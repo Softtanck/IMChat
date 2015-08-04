@@ -69,8 +69,8 @@ public class VoicePlayClickListener implements View.OnClickListener {
         audioManager.setMode(AudioManager.MODE_NORMAL);
         audioManager.setSpeakerphoneOn(true);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
-//        audioManager.setSpeakerphoneOn(true);//¹Ø±ÕÑïÉùÆ÷
-//        audioManager.setMode(AudioManager.MODE_IN_CALL);//°ÑÉùÒôÉè¶¨³ÉEarpiece£¨ÌıÍ²£©³öÀ´£¬Éè¶¨ÎªÕıÔÚÍ¨»°ÖĞ
+//        audioManager.setSpeakerphoneOn(true);//å…³é—­æ‰¬å£°å™¨
+//        audioManager.setMode(AudioManager.MODE_IN_CALL);//æŠŠå£°éŸ³è®¾å®šæˆEarpieceï¼ˆå¬ç­’ï¼‰å‡ºæ¥ï¼Œè®¾å®šä¸ºæ­£åœ¨é€šè¯ä¸­
 //        mediaPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
         try {
             mediaPlayer.setDataSource(context, voiceUri);
@@ -122,7 +122,7 @@ public class VoicePlayClickListener implements View.OnClickListener {
         }
 
         playVoice();
-        //ÅĞ¶ÏÊÇ·ñÎª·¢ËÍ,Èç¹ûÎª·¢ËÍ¾Í¿ÉÒÔ»ñÈ¡±¾µØ,Èç¹ûÊÇ½ÓÊÜ,¾Í±ØĞëÈ¥down.
+        //åˆ¤æ–­æ˜¯å¦ä¸ºå‘é€,å¦‚æœä¸ºå‘é€å°±å¯ä»¥è·å–æœ¬åœ°,å¦‚æœæ˜¯æ¥å—,å°±å¿…é¡»å»down.
     }
 }
 
