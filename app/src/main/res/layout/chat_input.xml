@@ -5,37 +5,60 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_margin="10dp"
-    android:gravity="center_vertical">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:src="@drawable/chat_voice_btn_selector" />
-
-    <EditText
-        android:id="@+id/et"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_weight="5"
-        android:background="@drawable/input_press"
-        android:hint="Let's Talk" />
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:background="@drawable/chat_send_btn"
-            android:onClick="send"
-            android:text="发送"
-            android:textColor="#ffffffff" />
+        <ImageView
+            android:id="@+id/chat_iv_voice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/chat_voice_btn_selector" />
+
+        <EditText
+            android:id="@+id/et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="5"
+            android:background="@drawable/input_press"
+            android:hint="Let's Talk" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/chat_send_btn"
+                android:onClick="send"
+                android:text="发送"
+                android:textColor="#ffffffff" />
+        </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <com.softtanck.imchat.view.recorderview.MySounderView
+            android:visibility="gone"
+            android:id="@+id/chat_voice_recorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chat_voice_btn"
+            android:gravity="center"
+            android:text="按住说话"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </LinearLayout>
 </LinearLayout>

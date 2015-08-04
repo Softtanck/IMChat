@@ -349,7 +349,7 @@ public class ChatAdapter extends BaseAdapter {
      */
     private void changeViewWidth(ViewHoder hoder, int voiceTime) {
         hoder.voiceTime.setText(voiceTime + "\"");
-        hoder.voiceGroup.getLayoutParams().width = 50 * voiceTime;//这里的50是需要根据屏幕宽度去计算宽度因子
+        hoder.voiceGroup.getLayoutParams().width = 100 + 50 * voiceTime;//这里的50是需要根据屏幕宽度去计算宽度因子
     }
 
     /**
