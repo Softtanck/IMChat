@@ -1,7 +1,6 @@
 package com.softtanck.imchat.activity;
 
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -24,12 +23,9 @@ import java.util.List;
 import android.view.View;
 import android.widget.Toast;
 
-import io.rong.imlib.NativeObject;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
-import io.rong.message.ImageMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 
@@ -44,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
 
     private ChatAdapter adapter;
     private List<Message> messages = new ArrayList<>();
-    private Message message;
+    private List<Message> sendQueues = new ArrayList<>();
     private MySounderView mySounderView;
 
     private ImageView imageView;
@@ -57,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
             listView.setSelection(messages.size() - 1);
         }
     };
+    private String temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
     }
 
     private void getHistoryMessage() {
-        List<Message> tmessages = RongIMClient.getInstance().getHistoryMessages(ConversationType.PRIVATE, "2", -1, 50);
+        List<Message> tmessages = RongIMClient.getInstance().getHistoryMessages(ConversationType.PRIVATE, "2", -1, 10);
         Log.d("Tanck", "拿到消息了" + tmessages);
         if (null != tmessages) {
             messages.clear();
@@ -136,11 +133,18 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
 
     @Override
     public void onEndRecod(String fileSrc) {
-        if (null != fileSrc) {
+        if (null != fileSrc && !fileSrc.equals(temp)) {
+            temp = fileSrc;
             Log.d("Tanck", "文件路径:" + Environment.getExternalStorageDirectory() + "/amr_0/" + fileSrc + ".amr");
             try {
                 File file = new File(Environment.getExternalStorageDirectory() + "/amr_0/" + fileSrc + ".amr");
-                SendMsg(VoiceMessage.obtain(Uri.fromFile(file), BaseUtils.getAmrDuration(file)));
+                int duration = BaseUtils.getAmrDuration(file);
+                if (3 >= duration) {
+                    Toast.makeText(MainActivity.this, "录音必须大于3秒", Toast.LENGTH_SHORT).show();
+                    file.delete();
+                    return;
+                }
+                SendMsg(VoiceMessage.obtain(Uri.fromFile(file), duration));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -149,22 +153,40 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
 
 
     private void SendMsg(MessageContent messageContent) {
-        message = RongIMClient.getInstance().sendMessage(ConversationType.PRIVATE, "2", messageContent, null, null, new RongIMClient.SendMessageCallback() {
+        RongIMClient.getInstance().sendMessage(ConversationType.PRIVATE, "2", messageContent, null, null, new RongIMClient.SendMessageCallback() {
             @Override
             public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
-                message.setSentStatus(Message.SentStatus.FAILED);
+                for (Message message : sendQueues) {
+                    message.setSentStatus(Message.SentStatus.FAILED);
+                    sendQueues.remove(message);
+                }
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onSuccess(Integer integer) {
-                Log.d("Tanck", "success");
-                message.setSentStatus(Message.SentStatus.SENT);
+                for (Message message : sendQueues) {
+                    if (message.getMessageId() == integer) {
+                        message.setSentStatus(Message.SentStatus.SENT);
+                        adapter.notifyDataSetChanged();
+                        sendQueues.remove(message);
+                        break;
+                    }
+                }
+            }
+        }, new RongIMClient.ResultCallback<Message>() {
+            @Override
+            public void onSuccess(Message message) {
+                sendQueues.add(message);
+                messages.add(message);
                 adapter.notifyDataSetChanged();
+                listView.setSelection(messages.size() - 1);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
             }
         });
-        messages.add(message);
-        adapter.notifyDataSetChanged();
-        listView.setSelection(messages.size() - 1);
     }
 }
