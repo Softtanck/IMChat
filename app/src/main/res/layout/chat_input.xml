@@ -15,13 +15,13 @@
 
     <EditText
         android:id="@+id/et"
-        android:hint="Let's Talk"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:layout_weight="5"
-        android:background="@drawable/input_default" />
+        android:background="@drawable/input_press"
+        android:hint="Let's Talk" />
 
     <LinearLayout
         android:layout_width="0dp"
