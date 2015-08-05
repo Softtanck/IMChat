@@ -10,7 +10,6 @@
     <!-- 获取机型信息权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
     <!-- 查看 Wi-Fi 状态 -->
@@ -28,6 +27,11 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
+    <!--百度-->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -35,7 +39,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.BaiduActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,6 +47,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--地图-->
+        <!--<activity android:name="com.softtanck.imchat.activity.BaiduActivity"/>-->
 
         <service
             android:name="io.rong.imlib.ipc.RongService"
@@ -92,9 +99,20 @@
             android:name="io.rong.imlib.HeartbeatReceiver"
             android:process=":ipc" />
 
+        <!--融云Sdk-->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
             android:value="82hegw5uh94tx" />
+
+        <!--百度SDK-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="IfI95c7jLz2Q2Am9sikKTwBG" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
     </application>
 
 </manifest>
