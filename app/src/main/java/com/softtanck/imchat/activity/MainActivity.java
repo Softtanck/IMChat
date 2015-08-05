@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.softtanck.imchat.R;
 import com.softtanck.imchat.adapter.ChatAdapter;
+import com.softtanck.imchat.adapter.VoicePlayClickListener;
 import com.softtanck.imchat.utils.BaseUtils;
 import com.softtanck.imchat.view.recorderview.MySounderView;
 
@@ -129,6 +130,9 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
     @Override
     public void onStartRecord(String fileSrc) {
         //update ui
+        if (VoicePlayClickListener.isPlaying) {
+            VoicePlayClickListener.currentPlayListener.stopPlayVoice();
+        }
     }
 
     @Override
@@ -139,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
             try {
                 File file = new File(Environment.getExternalStorageDirectory() + "/amr_0/" + fileSrc + ".amr");
                 int duration = BaseUtils.getAmrDuration(file);
-                if (3 >= duration) {
+                if (3 > duration) {
                     Toast.makeText(MainActivity.this, "录音必须大于3秒", Toast.LENGTH_SHORT).show();
                     file.delete();
                     return;
