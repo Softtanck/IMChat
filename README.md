@@ -9,3 +9,4 @@
  2015-8-5 10:13:43
  修正录音的时候关闭其他播放语音.
 
+![image](https://github.com/q422013/IMChat/blob/master/IM.jpg)
