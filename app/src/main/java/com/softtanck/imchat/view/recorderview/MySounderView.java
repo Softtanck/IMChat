@@ -18,6 +18,8 @@ public class MySounderView extends TextView {
 
     private boolean isDoubleClicked;
 
+    private boolean isClicked;
+
     private int DEFALUT_TIME = 500;
 
     private int mHeight;
@@ -38,13 +40,14 @@ public class MySounderView extends TextView {
     private String fileSrc;
     private Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
-            if (0x1 == msg.what && !isDoubleClicked) {
+            if (0x1 == msg.what && !isDoubleClicked && !isClicked) {
                 Log.d("Tanck", "开始录音");
                 fileSrc = String.valueOf(System.currentTimeMillis());
                 if (null != listener)
                     listener.onStartRecord(fileSrc);
                 msounder.start(fileSrc);
             }
+            isClicked = false;
         }
 
         ;
@@ -114,6 +117,10 @@ public class MySounderView extends TextView {
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                if (1000 > (System.currentTimeMillis() - oldTime))
+                    isClicked = true;
+                else
+                    isClicked = false;
                 if (!isCancled) {
                     Log.d("Tanck", "UP");
                     if (null != listener)
