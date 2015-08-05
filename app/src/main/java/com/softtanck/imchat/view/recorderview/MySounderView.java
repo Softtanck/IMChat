@@ -112,7 +112,7 @@ public class MySounderView extends TextView {
                     msounder.stop();
                     isCancled = true;
                     if (null != listener)
-                        listener.onEndRecod(fileSrc);
+                        listener.onEndRecord(fileSrc);
                     return false;
                 }
                 break;
@@ -124,7 +124,7 @@ public class MySounderView extends TextView {
                 if (!isCancled) {
                     Log.d("Tanck", "UP");
                     if (null != listener)
-                        listener.onEndRecod(fileSrc);
+                        listener.onEndRecord(fileSrc);
                     msounder.stop();
                 }
                 break;
@@ -147,7 +147,7 @@ public class MySounderView extends TextView {
         /**
          * 结束录音的时候
          */
-        public void onEndRecod(String fileSrc);
+        public void onEndRecord(String fileSrc);
 //
 //        /**
 //         * 快速点击的时候

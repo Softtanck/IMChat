@@ -136,15 +136,15 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
     }
 
     @Override
-    public void onEndRecod(String fileSrc) {
+    public void onEndRecord(String fileSrc) {
         if (null != fileSrc && !fileSrc.equals(temp)) {
             temp = fileSrc;
             Log.d("Tanck", "文件路径:" + Environment.getExternalStorageDirectory() + "/amr_0/" + fileSrc + ".amr");
             try {
                 File file = new File(Environment.getExternalStorageDirectory() + "/amr_0/" + fileSrc + ".amr");
                 int duration = BaseUtils.getAmrDuration(file);
-                if (3 > duration) {
-                    Toast.makeText(MainActivity.this, "录音必须大于3秒", Toast.LENGTH_SHORT).show();
+                if (1 > duration) {
+                    Toast.makeText(MainActivity.this, "录音必须大于1秒", Toast.LENGTH_SHORT).show();
                     file.delete();
                     return;
                 }
