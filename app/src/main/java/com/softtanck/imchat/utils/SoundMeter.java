@@ -3,16 +3,28 @@ package com.softtanck.imchat.utils;
 import java.io.File;
 import java.io.IOException;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
+import com.softtanck.imchat.R;
+
 public class SoundMeter {
     static final private double EMA_FILTER = 0.6;
 
     private MediaRecorder mRecorder = null;
+
+    private Context context;
+
+    private MediaPlayer mediaPlayer;
     private double mEMA = 0.0;
+
+    public SoundMeter(Context context) {
+        this.context = context;
+    }
 
     public void start(String name) {
 
@@ -47,12 +59,10 @@ public class SoundMeter {
                     mRecorder.setOutputFile(Environment.getExternalStorageDirectory() + "/amr_0/"
                             + params[0] + ".amr");
                     try {
-                        mRecorder.prepare();
-                        mRecorder.start();
-                        mEMA = 0.0;
+                        playPreperMusic();
                     } catch (IllegalStateException e) {
                         System.out.print(e.getMessage());
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         System.out.print(e.getMessage());
                     }
 
@@ -62,6 +72,19 @@ public class SoundMeter {
 
         }.execute(name);
 
+    }
+
+    private void playPreperMusic() {
+        try {
+            //已经 prepar了.
+            mediaPlayer = MediaPlayer.create(context, R.raw.kakalib_scan);
+            mediaPlayer.start();
+            mRecorder.prepare();
+            mRecorder.start();
+            mEMA = 0.0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void stop() {

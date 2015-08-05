@@ -64,7 +64,7 @@ public class MySounderView extends TextView {
     }
 
     private void initView() {
-        msounder = new SoundMeter();
+        msounder = new SoundMeter(getContext());
     }
 
     @Override
