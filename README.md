@@ -1,8 +1,12 @@
 # IMChat
-<b>基于融云的Im.深度定制UI.[主要设计Adapter与Item]</b>
+<b>基于融云的Im.深度定制UI.[主要设计Adapter与Item] 更新时间:2015-8-5</b>
  <br> 1.支持图片.
  <br> 2.文字.
  <br> 3.语音.
+ <br> 4.图文
+ <br> 5.gif[Developing]
+ <br> 6.表情[Developing]
+ <br> 7.地图[Developing]
  <br><b> 2015-8-4 :</b>
  <br> 修正语音录制连续发送Bug.
  <br> 修正消息连续发送状态异常.
