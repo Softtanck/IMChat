@@ -16,4 +16,5 @@
  <br> 修正录音的时候关闭其他播放语音Bug.
  <br> 增加语音录制提示音.
  <br> 修正语音单击录制Bug.
+ 
 ![image](https://github.com/q422013/IMChat/blob/master/IM.jpg)
