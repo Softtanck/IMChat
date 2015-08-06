@@ -197,6 +197,16 @@ public class ChatAdapter extends BaseAdapter {
                     viewHoder.state = (ImageView) convertView.findViewById(R.id.chat_iv_state);
                 } catch (Exception e) {
                 }
+            } else if (message.getContent() instanceof LocationMessage) {
+                try {
+                    viewHoder.time = (TextView) convertView.findViewById(R.id.chat_tv_time);
+                    viewHoder.name = (TextView) convertView.findViewById(R.id.chat_tv_name);
+                    viewHoder.head = (ImageView) convertView.findViewById(R.id.chat_iv_head);
+                    viewHoder.content = (TextView) convertView.findViewById(R.id.chat_tv_content);// 位置
+                    viewHoder.progressBar = (ProgressBar) convertView.findViewById(R.id.chat_pb);
+                    viewHoder.state = (ImageView) convertView.findViewById(R.id.chat_iv_state);
+                } catch (Exception e) {
+                }
             }
             convertView.setTag(viewHoder);
         } else {
@@ -265,6 +275,29 @@ public class ChatAdapter extends BaseAdapter {
      * @param position
      */
     private void handleLocationMessage(Message message, ViewHoder holder, int position) {
+
+        //set onclick listenter
+        holder.content.setText(((LocationMessage) message.getContent()).getPoi());
+
+        if (message.getMessageDirection() == Message.MessageDirection.SEND) {
+            switch (message.getSentStatus()) {
+                case DESTROYED://对方已销毁
+                case FAILED://发送失败
+                    holder.progressBar.setVisibility(View.GONE);
+                    holder.state.setVisibility(View.VISIBLE);
+                    break;
+                case SENDING://发送中
+                    holder.progressBar.setVisibility(View.VISIBLE);
+                    holder.state.setVisibility(View.GONE);
+                    break;
+                case READ:
+                case RECEIVED://对方已接受
+                case SENT://已发送
+                    holder.progressBar.setVisibility(View.GONE);
+                    holder.state.setVisibility(View.GONE);
+                    break;
+            }
+        }
     }
 
     /**
@@ -463,7 +496,7 @@ public class ChatAdapter extends BaseAdapter {
         } else if (content instanceof ImageMessage) {  // 图片消息
             return View.inflate(context, baseMessage.getMessageDirection() == Message.MessageDirection.RECEIVE ? R.layout.chat_item_img_revice : R.layout.chat_item_img_send, null);
         } else if (content instanceof LocationMessage) { // 位置消息
-            return null;
+            return View.inflate(context, baseMessage.getMessageDirection() == Message.MessageDirection.RECEIVE ? R.layout.chat_item_location_revice : R.layout.chat_item_location_send, null);
         } else if (content instanceof VoiceMessage) { // 语音消息
             return View.inflate(context, baseMessage.getMessageDirection() == Message.MessageDirection.RECEIVE ? R.layout.chat_item_voice_revice : R.layout.chat_item_voice_send, null);
         } else if (content instanceof InformationNotificationMessage) { //小灰色提醒消息
