@@ -1,6 +1,7 @@
 package com.softtanck.imchat.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.softtanck.imchat.App;
 import com.softtanck.imchat.ImageLoaderConfig;
 import com.softtanck.imchat.R;
+import com.softtanck.imchat.activity.BaiduMapActivity;
 import com.softtanck.imchat.utils.TimeFormatUtils;
 
 import java.util.List;
@@ -203,6 +205,7 @@ public class ChatAdapter extends BaseAdapter {
                     viewHoder.name = (TextView) convertView.findViewById(R.id.chat_tv_name);
                     viewHoder.head = (ImageView) convertView.findViewById(R.id.chat_iv_head);
                     viewHoder.content = (TextView) convertView.findViewById(R.id.chat_tv_content);// 位置
+                    viewHoder.location = (LinearLayout) convertView.findViewById(R.id.chat_ll_content);
                     viewHoder.progressBar = (ProgressBar) convertView.findViewById(R.id.chat_pb);
                     viewHoder.state = (ImageView) convertView.findViewById(R.id.chat_iv_state);
                 } catch (Exception e) {
@@ -274,9 +277,20 @@ public class ChatAdapter extends BaseAdapter {
      * @param holder
      * @param position
      */
-    private void handleLocationMessage(Message message, ViewHoder holder, int position) {
+    private void handleLocationMessage(final Message message, ViewHoder holder, int position) {
 
         //set onclick listenter
+        holder.location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double lat = ((LocationMessage) message.getContent()).getLat(); // 维度
+                double lng = ((LocationMessage) message.getContent()).getLng(); // 经度
+                Intent intent = new Intent(context, BaiduMapActivity.class);
+                intent.putExtra("lat", lat);
+                intent.putExtra("lng", lng);
+                context.startActivity(intent);
+            }
+        });
         holder.content.setText(((LocationMessage) message.getContent()).getPoi());
 
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {
@@ -482,6 +496,7 @@ public class ChatAdapter extends BaseAdapter {
         TextView voiceTime;//语音时间
         ImageView voiceIcon;//语音图片
         LinearLayout voiceGroup;//包裹语音
+        LinearLayout location;//包裹地图
     }
 
     /**
