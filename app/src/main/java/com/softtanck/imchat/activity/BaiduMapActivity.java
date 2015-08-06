@@ -28,7 +28,7 @@ import com.softtanck.imchat.R;
  * 此demo用来展示如何结合定位SDK实现定位，并使用MyLocationOverlay绘制定位位置 同时展示如何使用自定义图标绘制并点击时弹出泡泡
  * 
  */
-public class LocationDemo extends Activity {
+public class BaiduMapActivity extends Activity {
 
 	// 定位相关
 	LocationClient mLocClient;
