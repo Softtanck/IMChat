@@ -3,6 +3,7 @@ package com.softtanck.imchat.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.text.Spannable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.softtanck.imchat.App;
 import com.softtanck.imchat.ImageLoaderConfig;
 import com.softtanck.imchat.R;
 import com.softtanck.imchat.activity.BaiduMapActivity;
+import com.softtanck.imchat.utils.SmileUtils;
 import com.softtanck.imchat.utils.TimeFormatUtils;
 
 import java.util.List;
@@ -463,7 +465,8 @@ public class ChatAdapter extends BaseAdapter {
      * @param position
      */
     private void handleTextMessage(Message message, ViewHoder holder, int position) {
-        holder.content.setText(((TextMessage) message.getContent()).getContent());
+        Spannable span = SmileUtils.getSmiledText(context, ((TextMessage) message.getContent()).getContent());
+        holder.content.setText(span, TextView.BufferType.SPANNABLE);
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {
             switch (message.getSentStatus()) {
                 case DESTROYED://对方已销毁
