@@ -49,7 +49,9 @@
         </activity>
 
         <!--地图-->
-        <activity android:name="com.softtanck.imchat.activity.BaiduMapActivity"/>
+        <activity android:name="com.softtanck.imchat.activity.BaiduMapActivity" />
+        <!--显示大图-->
+        <activity android:name="com.softtanck.imchat.activity.ShowBigImgActivity" />
 
         <service
             android:name="io.rong.imlib.ipc.RongService"

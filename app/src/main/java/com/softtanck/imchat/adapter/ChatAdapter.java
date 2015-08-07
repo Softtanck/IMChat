@@ -3,6 +3,7 @@ package com.softtanck.imchat.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.text.Spannable;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.softtanck.imchat.App;
 import com.softtanck.imchat.ImageLoaderConfig;
 import com.softtanck.imchat.R;
 import com.softtanck.imchat.activity.BaiduMapActivity;
+import com.softtanck.imchat.activity.ShowBigImgActivity;
 import com.softtanck.imchat.utils.SmileUtils;
 import com.softtanck.imchat.utils.TimeFormatUtils;
 
@@ -409,9 +411,18 @@ public class ChatAdapter extends BaseAdapter {
      * @param position
      */
     private void handleImageMessage(Message message, ViewHoder holder, int position) {
-        Log.d("Tanck", "收到图片消息:" + ((ImageMessage) message.getContent()).getThumUri());
-        holder.imageView.setTag(((ImageMessage) message.getContent()).getThumUri());
-        imageLoader.displayImage(String.valueOf(((ImageMessage) message.getContent()).getThumUri()), holder.imageView, App.getInstance().imageLoaderConfig.setImageLoaderByNormal(), new ImageLoadingListener() {
+        final Uri imgUri = ((ImageMessage) message.getContent()).getThumUri();
+        Log.d("Tanck", "收到图片消息:" + imgUri);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ShowBigImgActivity.class);
+                intent.putExtra("img_remote", String.valueOf(imgUri));
+                context.startActivity(intent);
+            }
+        });
+        holder.imageView.setTag(imgUri);
+        imageLoader.displayImage(String.valueOf(imgUri), holder.imageView, App.getInstance().imageLoaderConfig.setImageLoaderByNormal(), new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
 
@@ -435,7 +446,6 @@ public class ChatAdapter extends BaseAdapter {
 
             }
         });
-//        holder.imageView.setImageResource(R.drawable.tmp_head_1); // 通过网络去获取图片
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {
             switch (message.getSentStatus()) {
                 case DESTROYED://对方已销毁

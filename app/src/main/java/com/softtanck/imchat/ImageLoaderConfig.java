@@ -8,6 +8,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
@@ -117,6 +118,26 @@ public class ImageLoaderConfig {
                 .considerExifParams(true)
                 .displayer(new FadeInBitmapDisplayer(100))//设置图片渐显的时间
                 .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+        return options;
+    }
+
+    /**
+     * 设置显示加载图片的方式:暂时先考虑用565
+     *
+     * @return
+     */
+    public DisplayImageOptions setImageLoaderByBig() {
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                showImageOnLoading(R.drawable.bg_chat_img_fail_message) // 加载中的
+                .showImageForEmptyUri(R.drawable.bg_chat_img_fail_message)
+                .showImageOnFail(R.drawable.bg_chat_img_fail_message)//加载失败的
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .displayer(new FadeInBitmapDisplayer(100))//设置图片渐显的时间
+                .bitmapConfig(Bitmap.Config.ARGB_8888)
+                .imageScaleType(ImageScaleType.NONE_SAFE)
                 .build();
         return options;
     }
