@@ -5,7 +5,7 @@
  <br> 3.语音.
  <br> 4.图文.
  <br> 5.gif(Developing)
- <br> 6.表情(Developing)
+ <br> 6.表情(Eemoji.暂未支持插件式.)
  <br> 7.地图.
  <br><b> 2015-8-4 :</b>
  <br> 修正语音录制连续发送Bug.
