@@ -18,6 +18,8 @@
  <br> 修正语音单击录制Bug.
  <br><b> 2015-8-6 :</b>
  <br> 修正地图展示.
+ qq:5088541
+ 欢迎联系IM讨论.
  
 ![image](https://github.com/q422013/IMChat/blob/master/IM3.jpg)
 ![image](https://github.com/q422013/IMChat/blob/master/IM2.jpg)
