@@ -1,5 +1,5 @@
 # IMChat
-<b>基于融云的Im.深度定制UI.[主要设计Adapter与Item] 更新时间:2015-8-6</b>
+<b>基于融云的Im.深度定制UI.[主要设计Adapter与Item] 更新时间:2015-8-18</b>
  <br> 1.支持图片.
  <br> 2.文字.
  <br> 3.语音.
@@ -18,6 +18,8 @@
  <br> 修正语音单击录制Bug.
  <br><b> 2015-8-6 :</b>
  <br> 修正地图展示.
+ <br><b>2015-8-18 :</b>
+ <br> 更新通讯能力Lib.
  <br>qq:5088541  欢迎联系IM讨论.
  
 ![image](https://github.com/q422013/IMChat/blob/master/IM3.jpg)
