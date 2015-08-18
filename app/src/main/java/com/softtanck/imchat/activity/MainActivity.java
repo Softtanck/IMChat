@@ -194,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
 
 
     private void SendMsg(MessageContent messageContent) {
-
         RongIMClient.getInstance().sendMessage(ConversationType.PRIVATE, "2", messageContent, null, null, new RongIMClient.SendMessageCallback() {
             @Override
             public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
