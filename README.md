@@ -20,6 +20,7 @@
  <br> 修正地图展示.
  <br><b>2015-8-18 :</b>
  <br> 更新通讯能力Lib.
+ 
  <br>qq:5088541  欢迎联系IM讨论.
  
 ![image](https://github.com/q422013/IMChat/blob/master/IM3.jpg)
