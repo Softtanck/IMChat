@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements RongIMClient.OnRe
 
 
     private void getHistoryMessage() {
-        List<Message> tmessages = RongIMClient.getInstance().getHistoryMessages(ConversationType.PRIVATE, "2", -1, 10);
+        List<Message> tmessages = RongIMClient.getInstance().getHistoryMessages(ConversationType.PRIVATE, "2", -1, 200);
         Log.d("Tanck", "拿到消息了" + tmessages);
         if (null != tmessages) {
             messages.clear();
