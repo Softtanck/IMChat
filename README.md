@@ -21,7 +21,7 @@
  <br><b>2015-8-18 :</b>
  <br> 更新通讯能力Lib.
  
- <br>qq:5088541  欢迎联系IM讨论.
+ <br>欢迎联系IM讨论.
  
 ![image](https://github.com/q422013/IMChat/blob/master/IM3.jpg)
 ![image](https://github.com/q422013/IMChat/blob/master/IM2.jpg)
