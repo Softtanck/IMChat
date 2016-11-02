@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:gravity="center">
 
-        <com.softtanck.imchat.view.recorderview.MySounderView
+        <com.softtanck.imforchat.view.recorderview.MySounderView
             android:id="@+id/chat_voice_recorder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

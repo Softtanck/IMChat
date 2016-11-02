@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.softtanck.imchat.view.expandview.ExpandGridView
+    <com.softtanck.imforchat.view.expandview.ExpandGridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

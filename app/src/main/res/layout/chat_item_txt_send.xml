@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_10dp_size">
 
-        <com.softtanck.imchat.view.imageview.CircleImageView
+        <com.softtanck.imforchat.view.imageview.CircleImageView
             android:id="@+id/chat_iv_head"
             android:layout_width="@dimen/default_head_50dp_size"
             android:layout_height="@dimen/default_head_50dp_size"

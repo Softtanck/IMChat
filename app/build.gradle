@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.softtanck.imchat"
+        applicationId "com.softtanck.imforchat"
         minSdkVersion 8
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -21,7 +21,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile files('libs/Rong_IMLib_v2_2_5.jar')
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile files('libs/Rong_IMLib_v2_7_3.jar')
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
 }
